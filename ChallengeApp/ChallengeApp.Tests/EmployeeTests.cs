@@ -3,44 +3,51 @@ namespace ChallengeApp.Tests
     public class EmployeeTests
     {
         [Test]
-        public void WhenEmployeeCollectTwoScores_ShouldReturnCorrectResult()
+        public void GetStatisticsShouldReturnMinValue()
         {
             // arrange - przygotowanie
-            var employee = new Employee("Adam", "Zorro", 25);
-            employee.AddScore(5);
-            employee.AddScore(-10);
+            var employee = new Employee("Mateusz", "Przyby³a");
+            employee.AddGrade(0);
+            employee.AddGrade(-3);
+            employee.AddGrade(-7);
 
             // act - uruchomienie
-            var result = employee.Result;
+            var statistics = employee.GetStatistics();
 
             // assert - sprawdzenie warunków
-            Assert.AreEqual(-5, result);
+            Assert.That(statistics.Min, Is.EqualTo(-7));
         }
 
         [Test]
-        public void WhenEmployeesCollectScores_ThenMaxResultWins()
+        public void GetStatisticsShouldReturnMaxValue()
         {
             // arrange - przygotowanie
-            var employee1 = new Employee("Micha³", "Zorro", 26);
-            employee1.AddScore(10);
-            employee1.AddScore(-10);
-
-            var employee2 = new Employee("Karol", "Zorro", 27);
-            employee2.AddScore(9);
-            employee2.AddScore(-10);
+            var employee = new Employee("Mateusz", "Przyby³a");
+            employee.AddGrade(0);
+            employee.AddGrade(-3);
+            employee.AddGrade(-7);
 
             // act - uruchomienie
-            var result1 = employee1.Result;
-            var result2 = employee2.Result;
-
-            bool maxResult = result1 < result2;
+            var statistics = employee.GetStatistics();
 
             // assert - sprawdzenie warunków
-            Assert.AreEqual(false, maxResult);
+            Assert.That(statistics.Max, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void GetStatisticsShouldReturnAverageValue()
+        {
+            // arrange - przygotowanie
+            var employee = new Employee("Mateusz", "Przyby³a");
+            employee.AddGrade(0);
+            employee.AddGrade(-3);
+            employee.AddGrade(-7);
+
+            // act - uruchomienie
+            var statistics = employee.GetStatistics();
+
+            // assert - sprawdzenie warunków
+            Assert.That(Math.Round(statistics.Average, 2), Is.EqualTo(Math.Round(-3.33, 2)));
         }
     }
 }
-
-// Testy jednostkowe (unitowe) s³u¿¹ do tego, aby testowaæ nasz kod.Weryfikacja programu po zmianach.
-// Narzêdzia do testów: NUnit, MSTest, xUnit. 
-// 3 elementy dobrego testu: Arrange (przygotowanie), Act (uruchomienie), Assert (sprawdzenie warunków). 
