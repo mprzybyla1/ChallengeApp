@@ -75,5 +75,68 @@
 
             return statistics;
         }
+
+        public Statistics GetStatisticsWithFor()
+        {
+            var statistics = new Statistics();
+            statistics.Average = 0;
+            statistics.Max = float.MinValue;
+            statistics.Min = float.MaxValue;
+
+            for (var grade = 0; grade < this.grades.Count; grade++)
+            {
+                statistics.Max = Math.Max(statistics.Max, this.grades[grade]);
+                statistics.Min = Math.Min(statistics.Min, this.grades[grade]);
+                statistics.Average += this.grades[grade];
+            }
+
+            statistics.Average /= this.grades.Count;
+
+            return statistics;
+        }
+
+        public Statistics GetStatisticsWithDoWhile()
+        {
+            var statistics = new Statistics();
+            statistics.Average = 0;
+            statistics.Max = float.MinValue;
+            statistics.Min = float.MaxValue;
+
+            var grade = 0;
+
+            do
+            {
+                statistics.Max = Math.Max(statistics.Max, this.grades[grade]);
+                statistics.Min = Math.Min(statistics.Min, this.grades[grade]);
+                statistics.Average += this.grades[grade];
+                grade++;
+            } while (grade < this.grades.Count);
+
+            statistics.Average /= this.grades.Count;
+
+            return statistics;
+        }
+
+        public Statistics GetStatisticsWithWhile()
+        {
+            var statistics = new Statistics();
+            statistics.Average = 0;
+            statistics.Max = float.MinValue;
+            statistics.Min = float.MaxValue;
+
+            var grade = 0;
+
+            while (grade < this.grades.Count)
+            {
+                statistics.Max = Math.Max(statistics.Max, this.grades[grade]);
+                statistics.Min = Math.Min(statistics.Min, this.grades[grade]);
+                statistics.Average += this.grades[grade];
+                grade++;
+            }
+
+            statistics.Average /= this.grades.Count;
+
+            return statistics;
+        }
     }
 }
