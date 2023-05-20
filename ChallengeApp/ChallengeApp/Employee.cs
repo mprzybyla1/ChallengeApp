@@ -1,10 +1,16 @@
-﻿namespace ChallengeApp
+﻿using System.ComponentModel.Design;
+
+namespace ChallengeApp
 {
     public class Employee
     {
         private List<float> grades = new List<float>();
 
-        public Employee (string name, string surname)
+        public Employee()
+        {
+        }
+
+        public Employee(string name, string surname)
         {
             this.Name = name;
             this.Surname = surname;
@@ -15,7 +21,7 @@
                 
         public void AddGrade(float grade)
         {
-            if (grade >= 0 && grade < 100)
+            if (grade >= 0 && grade <= 100)
             {
                 this.grades.Add(grade);
             }
@@ -31,9 +37,13 @@
             {
                 this.AddGrade(result);
             }
+            else if (grade.Length == 1)
+            {
+                AddGrade(Convert.ToChar(grade));
+            }
             else
             {
-                Console.WriteLine("String is not float");
+                Console.WriteLine("Type figure or letter between A - E");
             }
         }
 
@@ -52,8 +62,32 @@
 
         public void AddGrade(char grade)
         {
-            var result = char.ToString(grade);
-            this.AddGrade(result);
+            switch (grade)
+            {
+                case 'A':
+                case 'a':
+                    this.grades.Add(100);
+                    break;
+                case 'B':
+                case 'b':
+                    this.grades.Add(80);
+                    break;
+                case 'C':
+                case 'c':
+                    this.grades.Add(60);
+                    break;
+                case 'D':
+                case 'd':
+                    this.grades.Add(40);
+                    break;
+                case 'E':
+                case 'e':
+                    this.grades.Add(20);
+                    break;
+                default:
+                    Console.WriteLine("Wrong Letter");
+                    break;
+            }
         }
 
         //Przygotowanie metody, która zwróci oceny.
@@ -73,6 +107,24 @@
 
             statistics.Average /= this.grades.Count;
 
+            switch(statistics.Average)
+            {
+                case var average when average >= 80:
+                    statistics.AverageLetter = 'A';
+                    break;
+                case var average when average >= 60:
+                    statistics.AverageLetter = 'B';
+                    break;
+                case var average when average >= 40:
+                    statistics.AverageLetter = 'C';
+                    break;
+                case var average when average >= 20:
+                    statistics.AverageLetter = 'D';
+                    break;
+                default:
+                    statistics.AverageLetter = 'E';
+                    break;
+            }
             return statistics;
         }
     }
