@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design;
-
-namespace ChallengeApp
+﻿namespace ChallengeApp
 {
     public class Employee
     {
@@ -27,23 +25,47 @@ namespace ChallengeApp
             }
             else
             {
-                Console.WriteLine("Invalid grade value");
+                throw new Exception("invalid grade value");
             }
         }
 
         public void AddGrade(string grade)
         {
-            if(float.TryParse(grade, out float result))
+            if (float.TryParse(grade, out float result))
             {
                 this.AddGrade(result);
             }
-            else if (grade.Length == 1)
+            else if (char.TryParse(grade, out char charResult))
             {
-                AddGrade(Convert.ToChar(grade));
+                switch (charResult)
+                {
+                    case 'A':
+                    case 'a':
+                        this.AddGrade(100);
+                        break;
+                    case 'B':
+                    case 'b':
+                        this.AddGrade(80);
+                        break;
+                    case 'C':
+                    case 'c':
+                        this.AddGrade(60);
+                        break;
+                    case 'D':
+                    case 'd':
+                        this.AddGrade(40);
+                        break;
+                    case 'E':
+                    case 'e':
+                        this.AddGrade(20);
+                        break;
+                    default:
+                        throw new Exception("Wrong Letter");
+                }
             }
             else
             {
-                Console.WriteLine("Type figure or letter between A - E");
+                throw new Exception("Type figure or letter between A - E");
             }
         }
 
@@ -58,36 +80,6 @@ namespace ChallengeApp
         {
             float valueLong = (float)grade;
             this.AddGrade(valueLong);
-        }
-
-        public void AddGrade(char grade)
-        {
-            switch (grade)
-            {
-                case 'A':
-                case 'a':
-                    this.grades.Add(100);
-                    break;
-                case 'B':
-                case 'b':
-                    this.grades.Add(80);
-                    break;
-                case 'C':
-                case 'c':
-                    this.grades.Add(60);
-                    break;
-                case 'D':
-                case 'd':
-                    this.grades.Add(40);
-                    break;
-                case 'E':
-                case 'e':
-                    this.grades.Add(20);
-                    break;
-                default:
-                    Console.WriteLine("Wrong Letter");
-                    break;
-            }
         }
 
         //Przygotowanie metody, która zwróci oceny.
