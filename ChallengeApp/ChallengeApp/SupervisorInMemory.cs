@@ -1,23 +1,26 @@
 ﻿namespace ChallengeApp
 {
-    public class Supervisor : IEmployee
+    public class SupervisorInMemory : EmployeeBase
     {
+        public override event GradeAddedDelegate GradeAdded;
+
         private List<float> grades = new List<float>();
 
-        public Supervisor (string name, string surname)
+        public SupervisorInMemory (string name, string surname)
+           : base(name, surname)
         {
-            this.Name = name;
-            this.Surname = surname;
         }
-        public string Name { get; private set; }
 
-        public string Surname { get; private set; }
-
-        public void AddGrade(float grade)
+        public override void AddGrade(float grade)
         {
             if (grade >= 0 && grade <= 100)
             {
                 this.grades.Add(grade);
+
+                if (GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
@@ -25,7 +28,7 @@
             }
         }
 
-        public void AddGrade(string grade)
+        public override void AddGrade(string grade)
         {
             {
                 switch (grade)
@@ -94,20 +97,20 @@
             }
         }
 
-        public void AddGrade(double grade)
+        public override void AddGrade(double grade)
         {
             grade = Math.Round(grade, 2);
             float valueDouble = (float)grade;
             this.AddGrade(valueDouble);
         }
 
-        public void AddGrade(long grade)
+        public override void AddGrade(long grade)
         {
             float valueLong = (float)grade;
             this.AddGrade(valueLong);
         }
 
-        public Statistics GetStatistics()
+        public override Statistics GetStatistics()
         {
             var statistics = new Statistics();
             statistics.Average = 0;
